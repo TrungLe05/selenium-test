@@ -8,25 +8,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-/**
- * Lớp cha cho mọi test E2E: khởi tạo WebDriver một lần cho cả class,
- * cấu hình timeout, và đóng driver khi class chạy xong.
- * Mọi test class chỉ cần `extends BaseTest` để có sẵn `driver`.
- */
 @ExtendWith(AllureScreenshotExtension.class)
 public abstract class BaseTest {
 
     protected static WebDriver driver;
+    protected WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     @BeforeAll
     static void setupDriver() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized", "--disable-notifications");
-        // options.addArguments("--headless=new");
-
         driver = new ChromeDriver(options);
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         DriverHolder.set(driver);

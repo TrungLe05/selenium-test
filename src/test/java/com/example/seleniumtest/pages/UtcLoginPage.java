@@ -68,4 +68,34 @@ public class UtcLoginPage extends BasePage {
         click(FORGOT_PASSWORD_LINK);
         wait.until(ExpectedConditions.urlContains("/Login/GetPass"));
     }
+
+    // Thêm vào UtcLoginPage, bên cạnh các method cũ
+
+    public String usernameValue() {
+        return driver.findElement(USERNAME_INPUT).getDomProperty("value");
+    }
+
+    public String passwordInputType() {
+        return driver.findElement(PASSWORD_INPUT).getDomProperty("type");
+    }
+
+    public boolean isHttps() {
+        return driver.getCurrentUrl().startsWith("https://");
+    }
+
+    public void tabFromUsernameToPassword() {
+        driver.findElement(USERNAME_INPUT).sendKeys(org.openqa.selenium.Keys.TAB);
+    }
+
+    public String activeElementName() {
+        return driver.switchTo().activeElement().getDomAttribute("name");
+    }
+
+    public void submitViaEnterOnPassword(String dummyPassword) {
+        driver.findElement(PASSWORD_INPUT).sendKeys(dummyPassword + org.openqa.selenium.Keys.ENTER);
+    }
+
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
 }
